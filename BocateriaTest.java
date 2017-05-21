@@ -31,11 +31,13 @@ public class BocateriaTest
     public void setUp()
     {
         bocateri1 = new Bocateria();
-        bocateri1.llegaNuevoClienteALaCola(4);
-        bocateri1.llegaNuevoClienteALaCola(7);
+        bocateri1.llegaNuevoClienteALaCola(3);
+        bocateri1.llegaNuevoClienteALaCola(5);
         bocateri1.llegaNuevoClienteALaCola(2);
-        bocateri1.llegaNuevoClienteALaCola(12);
-        bocateri1.visualizaDatosClienteEnLaCola();
+        bocateri1.llegaNuevoClienteALaCola(54);
+        bocateri1.llegaNuevoClienteALaCola(3);
+        bocateri1.llegaNuevoClienteALaCola(3);
+        bocateri1.llegaNuevoClienteALaCola(9);
     }
 
     /**

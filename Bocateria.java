@@ -10,8 +10,8 @@ class Bocateria {
     private int facturacionActual;
     private ArrayList<Cliente> clientesEnLaCola;
     private HashMap<Integer,Cliente> clientesDepachados;
-    private int posicionEnLaCola;
-    
+    private int posicionEnLaCola; 
+
     public  static int PRECIO_BOCADILLO = 5;
 
     public Bocateria() {
@@ -20,7 +20,7 @@ class Bocateria {
         facturacionActual = 0;
         posicionEnLaCola = 1;
     }
-    
+
     /**
      * crea un nuevo objeto Cliente y lo pone  a la cola de clientes que están
      * esperando a ser atendidos
@@ -31,16 +31,16 @@ class Bocateria {
         clientesEnLaCola.add(cliente);
         posicionEnLaCola ++;
     }
-    
-     public void visualizaDatosClienteEnLaCola(){
+
+    public void visualizaDatosClienteEnLaCola(){
         System.out.println("\n ======= Datos de clientes en al cola.");
         for(int i = 0; i < clientesEnLaCola.size(); i ++){
             int valor = clientesEnLaCola.get(i).getNumeroDeBocadillos();
             System.out.println("Cliente: " +clientesEnLaCola.get(i).getNumeroCliente()+ ": " +valor
-                                    + " bocadillo/s (" +valor * PRECIO_BOCADILLO+ " euros)");
+                + " bocadillo/s (" +valor * PRECIO_BOCADILLO+ " euros)");
         }
     }
-    
+
     /**
      * para despachar al cliente que está el primero de la cola 
      * La facturación de la tienda debe verse incrementada, la cola de la caja debe avanzar y el cliente debe pasar 
@@ -52,7 +52,7 @@ class Bocateria {
         clientesDepachados.put(cliente.getNumeroCliente(), cliente);
         facturacionActual += valorBocadillos;
     }
-    
+
     /**
      * para poder ver los datos de la bocateria en el instante actual.
      */
@@ -61,24 +61,40 @@ class Bocateria {
         //System.out.println("========== Estado de la cola.\n");
         visualizaDatosClienteEnLaCola();
         System.out.println("\nClientes despachados.");
-        
+
         Iterator it = clientesDepachados.keySet().iterator();
         while(it.hasNext()){
             Integer clave = (Integer) it.next();
             int numBocadillos = clientesDepachados.get(clave).getNumeroDeBocadillos();
             System.out.println("Cliente: " +clientesDepachados.get(clave).getNumeroCliente()
-            + ": " +numBocadillos + " bocadillo/s  ( " +numBocadillos * PRECIO_BOCADILLO+ " euros ) ");
+                + ": " +numBocadillos + " bocadillo/s  ( " +numBocadillos * PRECIO_BOCADILLO+ " euros ) ");
         }
-    
+
+    }
+
+    /**
+     * retorna la posición del primer cliente con mayor nº de bocadillos pedidos.
+     */
+    public int getPosicionPrimerClienteConMasBocadillos(){
+        int colaVacia = -1;
+        if(!clientesEnLaCola.isEmpty()){         
+            int cont = 0;
+            while( cont < clientesEnLaCola.size()  ){
+                colaVacia = clientesEnLaCola.get(cont).getNumeroCliente();
+                int numBocatas = clientesEnLaCola.get(cont).getNumeroDeBocadillos();
+                for(Cliente cliente: clientesEnLaCola){
+                    if(cliente.getNumeroDeBocadillos() > numBocatas){
+                        numBocatas = cliente.getNumeroDeBocadillos();
+                        colaVacia = cliente.getNumeroCliente();
+                    }
+                }
+                cont ++;
+            }
+        }
+        return colaVacia;
     }
 
 }
-
-
-
-
-
-
 
 
 
