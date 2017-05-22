@@ -33,11 +33,16 @@ class Bocateria {
     }
 
     public void visualizaDatosClienteEnLaCola(){
-        System.out.println("\n ======= Datos de clientes en al cola.");
-        for(int i = 0; i < clientesEnLaCola.size(); i ++){
-            int valor = clientesEnLaCola.get(i).getNumeroDeBocadillos();
-            System.out.println("Cliente: " +clientesEnLaCola.get(i).getNumeroCliente()+ ": " +valor
-                + " bocadillo/s (" +valor * PRECIO_BOCADILLO+ " euros)");
+        System.out.println("\n======= Datos de clientes en al cola.==== ");
+        if(clientesEnLaCola.size() > 0){
+            for(int i = 0; i < clientesEnLaCola.size(); i ++){
+                int valor = clientesEnLaCola.get(i).getNumeroDeBocadillos();
+                System.out.println("Cliente: " +clientesEnLaCola.get(i).getNumeroCliente()+ ": " +valor
+                    + " bocadillo/s (" +valor * PRECIO_BOCADILLO+ " euros)");
+            }
+        }
+        else{
+            System.out.println("____-______- Cola de clientes vacía.\n");
         }
     }
 
@@ -47,21 +52,26 @@ class Bocateria {
      * al registro de clientes despachados
      */
     public void depacharClienteActual(){
-        Cliente cliente = clientesEnLaCola.remove(0);
-        int valorBocadillos = cliente.getNumeroDeBocadillos() * PRECIO_BOCADILLO;
-        clientesDepachados.put(cliente.getNumeroCliente(), cliente);
-        facturacionActual += valorBocadillos;
+        if(!clientesEnLaCola.isEmpty()){   
+            Cliente cliente = clientesEnLaCola.remove(0);
+            int valorBocadillos = cliente.getNumeroDeBocadillos() * PRECIO_BOCADILLO;
+            clientesDepachados.put(cliente.getNumeroCliente(), cliente);
+            facturacionActual += valorBocadillos;
+        }
+        else{        
+            System.out.println("______--___  Cola sin clientes.");
+        }
     }
 
     /**
      * para poder ver los datos de la bocateria en el instante actual.
      */
     public void visualizaDatosBocateria(){
-        System.out.println("\nFacturación actual: " +facturacionActual+ " euros." );
-        //System.out.println("========== Estado de la cola.\n");
-        visualizaDatosClienteEnLaCola();
-        System.out.println("\nClientes despachados.");
+        System.out.println("\n *******************Estado actual de la Bocateria.**********");
 
+        System.out.println("\n====== Facturación actual; "+facturacionActual+ " €.\n");
+        visualizaDatosClienteEnLaCola();
+        System.out.println("\n====== Clientes despachados. ========");
         Iterator it = clientesDepachados.keySet().iterator();
         while(it.hasNext()){
             Integer clave = (Integer) it.next();
@@ -94,7 +104,27 @@ class Bocateria {
         return colaVacia;
     }
 
+    /**
+     * se elimina un cliente de la cola de la bocatería.
+     */
+    public void clienteAbandonaCola(int num){
+        int cont = 0;//control para que el parámetro num se ajuste al nº de clientes en la cola.
+        if(num > 0 && cont < clientesEnLaCola.size() && clientesEnLaCola != null){
+            int cont2 = clientesEnLaCola.size();//almacena el tamaño original de la cola.
+            boolean encontrado = false;
+            int cont6 = 0;// para eliminar de la cola a los que la abandonan antes de comprar.
+            while(cont2 > 0 && !encontrado){
+                if(clientesEnLaCola.get(cont6).getNumeroCliente() == num){
+                    clientesEnLaCola.remove(cont6);
+                    encontrado = true;
+                }
+                cont2 --;
+                cont6 ++;
+            }
+        }
+        else{
+            System.out.println("Error, número no válido. ");
+        }
+    }
 }
-
-
 
