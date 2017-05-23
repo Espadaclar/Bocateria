@@ -126,5 +126,28 @@ class Bocateria {
             System.out.println("Error, número no válido. ");
         }
     }
+
+    /**
+     * ordenarColaPorNumeroDeBocadillos
+     */
+    public void ordenarColaPorNumeroDeBocadillos(){
+        for(int i = 1; i < clientesEnLaCola.size(); i ++){
+            for(int u = 0; u < clientesEnLaCola.size(); u ++){
+                if(clientesEnLaCola.get(i).getNumeroDeBocadillos() > clientesEnLaCola.get(u).getNumeroDeBocadillos()){
+                    Cliente cliente = clientesEnLaCola.get(i);
+                    clientesEnLaCola.set(i, clientesEnLaCola.get(u));
+                    clientesEnLaCola.set(u, cliente);
+                }
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
 
